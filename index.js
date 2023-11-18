@@ -25,7 +25,7 @@ window.addEventListener("load", () => {
 
   document.body.onclick = (e) => {
     e.preventDefault();
-    const text = `<!DOCTYPE html><html> <head> <title>janet</title> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1"> <link rel="stylesheet" href="https://iguannalin.github.io/janet/index.css"/> </head> <body> <div id="container" data-garden=${garden}></div><script>window.addEventListener("load", ()=>{const container=document.getElementById("container"); const garden=container.dataset.garden; function goFurther(){garden.forEach((el)=> el.style.left=+(el.offsetLeft)+1+"px");}}); </script> </body></html>`;
+    const text = `<!DOCTYPE html><html> <head> <title>janet</title> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1"> <link rel="stylesheet" href="https://iguannalin.github.io/janet/index.css"/> </head> <body> <div id="container" data-garden=${btoa(garden)}></div><script>window.addEventListener("load", ()=>{const container=document.getElementById("container"); const garden=atob(container.dataset.garden); function goFurther(){garden.forEach((el)=> el.style.left=+(el.offsetLeft)+1+"px");}}); </script> </body></html>`;
     const blob = new Blob([text], {type: "text/html"});
     const blobUrl = URL.createObjectURL(blob);
     window.open(blobUrl, '_self');
