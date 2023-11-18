@@ -6,7 +6,7 @@ window.addEventListener("load", () => {
   }
   const container = document.getElementById("container");
   let garden = "";
-  function createElement(text) {
+  function createElement(id,text) {
     if (Math.random()>0.8) return;
     const pre = document.createElement("pre");
     pre.innerHTML = text;
@@ -14,14 +14,14 @@ window.addEventListener("load", () => {
     const top = getRandomInt(-100,window.innerHeight-100);
     pre.style.left = left+"px";
     pre.style.fontSize = getRandomInt(5,18)+"px";
-    const cactus = `${btoa(text)},${left}**`;
+    const cactus = `id-${id},${left}**`;
     garden+=cactus;
     container.appendChild(pre);
   }
   // incredible ascii art from -- https://www.asciiart.eu/plants/cactus
   fetch("cacti.json").then((r)=>r.json()).then((d)=>{
     for (let i = 0; i < getRandomInt(5,15); i++) {
-      createElement(d[getRandomInt(0,d.length)]);
+      createElement(i,d[getRandomInt(0,d.length)]);
     }
   });
 
