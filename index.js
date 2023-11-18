@@ -5,15 +5,17 @@ window.addEventListener("load", () => {
     return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
   }
   const container = document.getElementById("container");
-  const garden = [];
+  let garden = "";
   function createElement(text) {
     if (Math.random()>0.8) return;
     const pre = document.createElement("pre");
     pre.innerHTML = text;
-    pre.style.left = getRandomInt(-100,window.innerWidth-100)+"px";
-    pre.style.top = getRandomInt(-100,window.innerHeight-100)+"px";
+    const left = getRandomInt(-100,window.innerWidth-100);
+    const top = getRandomInt(-100,window.innerHeight-100);
+    pre.style.left = left+"px";
     pre.style.fontSize = getRandomInt(5,18)+"px";
-    garden.push(pre);
+    const cactus = `${text},${left},${pre.style.fontSize}**`;
+    garden+=cactus;
     container.appendChild(pre);
   }
   // incredible ascii art from -- https://www.asciiart.eu/plants/cactus
@@ -25,10 +27,11 @@ window.addEventListener("load", () => {
 
   document.body.onclick = (e) => {
     e.preventDefault();
-    const text = `<!DOCTYPE html><html> <head> <title>janet</title> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1"> <link rel="stylesheet" href="https://iguannalin.github.io/janet/index.css"/> </head> <body> <div id="container" data-garden=${btoa(garden)}></div><script>window.addEventListener("load", ()=>{const container=document.getElementById("container"); const garden=atob(container.dataset.garden); function goFurther(){garden.forEach((el)=> el.style.left=+(el.offsetLeft)+1+"px");}}); </script> </body></html>`;
+    console.log(garden);
+    const text = `<!DOCTYPE html><html> <head> <title>janet</title> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1"> <link rel="stylesheet" href="index.css"/> </head> <body> <div id="container" data-garden=${garden}></div><script>window.addEventListener("load", ()=>{const container=document.getElementById("container"); const garden=container.dataset.garden; function goFurther(){garden.split("**").forEach((el)=>{const pieces=el.split(","); if (pieces.length<1) return; el.style.left=+(pieces[0])+1+"px");}}}); </script> </body></html>`;
     const blob = new Blob([text], {type: "text/html"});
     const blobUrl = URL.createObjectURL(blob);
-    window.open(blobUrl, '_self');
+    window.open(blobUrl, '_blank');
     window.URL.revokeObjectURL(blobUrl);
   }
 });
