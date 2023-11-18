@@ -14,7 +14,7 @@ window.addEventListener("load", () => {
     const top = getRandomInt(-100,window.innerHeight-100);
     pre.style.left = left+"px";
     pre.style.fontSize = getRandomInt(5,18)+"px";
-    const cactus = `${text},${left},${pre.style.fontSize}**`;
+    const cactus = `${btoa(text)},${left}**`;
     garden+=cactus;
     container.appendChild(pre);
   }
@@ -28,7 +28,7 @@ window.addEventListener("load", () => {
   document.body.onclick = (e) => {
     e.preventDefault();
     console.log(garden);
-    const text = `<!DOCTYPE html><html> <head> <title>janet</title> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1"> <link rel="stylesheet" href="https://iguannalin.github.io/janet/index.css"/> </head> <body> <div id="container" data-garden=${btoa(garden)}></div><script>window.addEventListener("load", ()=>{const container=document.getElementById("container"); const garden=atob(container.dataset.garden); function goFurther(){garden.split("**").forEach((el)=>{const pieces=el.split(","); if (pieces.length<1) return; el.style.left=+(pieces[0])+1+"px");}}}); </script> </body></html>`;
+    const text = `<!DOCTYPE html><html> <head> <title>janet</title> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1"> <link rel="stylesheet" href="https://iguannalin.github.io/janet/index.css"/> </head> <body> <div id="container" data-garden=${btoa(garden)}></div><script>window.addEventListener("load", ()=>{const container=document.getElementById("container"); const garden=atob(container.dataset.garden); function goFurther(){garden.split("**").forEach((el)=>{const pieces=el.split(","); if (pieces.length<1) return; document.getElementById(pieces[0]).style.left=+(pieces[1])+1+"px");}}}); </script> </body></html>`;
     const blob = new Blob([text], {type: "text/html"});
     const blobUrl = URL.createObjectURL(blob);
     window.open(blobUrl, '_blank');
